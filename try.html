@@ -1,32 +1,60 @@
 <!doctype html>
 <html>
-  <head>
-    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
-    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
-    <link rel='stylesheet' type='text/css' href='/resources/tutorial/css/example.css'>
-  </head>
-  <body>
-    <div id='messagesDiv'></div>
-    <input type='text' id='nameInput' placeholder='Name'>
-    <input type='text' id='messageInput' placeholder='Message'>
-    <script>
-      var myDataRef = new Firebase('https://ju4u40r2xpf.firebaseio-demo.com/');
-      $('#messageInput').keypress(function (e) {
-        if (e.keyCode == 13) {
-          var name = $('#nameInput').val();
-          var text = $('#messageInput').val();
-          myDataRef.push({name: name, text: text});
-          $('#messageInput').val('');
-        }
-      });
-      myDataRef.on('child_added', function(snapchat) {
-        var message = snapchat.val();
-        displayChatMessage(message.name, message.text);
-      });
-      function displayChatMessage(name, text) {
-        $('<div/>').text(text).prepend($('<em/>').text(name+': ')).appendTo($('#messagesDiv'));
-        $('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;
-      };
-    </script>
-  </body>
+	<head>
+		<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+		<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+		<link rel='stylesheet' type='text/css' href='/resources/tutorial/css/example.css'>
+	</head>
+
+	<body>
+
+		<input type='text' id='note' placeholder='Add note'>
+		<input type='button' id ='doneButton' onClick='done()' value='Done'>
+		<input type='button' id ='notDoneButton' onClick='notDone()' value='Not Done'>
+		<input type='button' id ='clear' onClick='clearPad()' value='clear'>
+
+		<br>
+	    Done:
+	    <div id='doneDiv'></div>
+	    <hr>
+	    Not Done: 
+	 	<div id='notDoneDiv'></div>
+
+	    <script>
+			var myDataRef = new Firebase('https://ju4u40r2xpf.firebaseio-demo.com/');
+
+			myDataRef.on('child_added', function(snap) {
+				var entry = snap.val();
+				displayChatMessage(entry.note, entry.done);
+			});
+		  
+
+			function displayChatMessage(note, done) {
+				if(done) $('<div/>').text(note).appendTo($('#doneDiv'));
+				else $('<div/>').text(note).appendTo($('#notDoneDiv'));
+			};
+
+			function clearPad(){
+				myDataRef.remove();
+				$('#doneDiv').empty();
+				$('#notDoneDiv').empty();
+			};
+
+		    function done(){
+			    var note = $('#note').val();
+			    $('#note').val("");
+			    myDataRef.push({note: note, done: true});
+		    };
+
+		    function notDone(){
+			    var note = $('#note').val();
+			    $('#note').val("");
+			    myDataRef.push({note: note, done: false});
+		    };
+	 	</script>
+
+		</body>
 </html>
+
+
+     
