@@ -7,10 +7,10 @@
 	</head>
 
 	<body>
-
+		<input type='text' id='title' placeholder='Add title'>
 		<input type='text' id='note' placeholder='Add note'>
-		<input type='button' id ='doneButton' onClick='done()' value='Done'>
-		<input type='button' id ='notDoneButton' onClick='notDone()' value='Not Done'>
+		<input type='button' id ='doneButton' onClick='add(true)' value='Done'>
+		<input type='button' id ='notDoneButton' onClick='add(false)' value='Not Done'>
 		<input type='button' id ='clear' onClick='clearPad()' value='clear'>
 
 		<br>
@@ -25,13 +25,15 @@
 
 			myDataRef.on('child_added', function(snap) {
 				var entry = snap.val();
-				displayChatMessage(entry.note, entry.done);
+				displayTasks(entry.title, entry.note, entry.done);
 			});
 		  
+			function displayTasks(title, note, done) {
+				var div = document.createElement("div");
+				div.innerHTML = title + ": " + note;
 
-			function displayChatMessage(note, done) {
-				if(done) $('<div/>').text(note).appendTo($('#doneDiv'));
-				else $('<div/>').text(note).appendTo($('#notDoneDiv'));
+				if(done) $('<div/>').text(title + ": " + note).appendTo($('#doneDiv'));
+				else $('<div/>').text(title + ": " + note).appendTo($('#notDoneDiv'));
 			};
 
 			function clearPad(){
@@ -40,16 +42,14 @@
 				$('#notDoneDiv').empty();
 			};
 
-		    function done(){
+		    function add(done){
 			    var note = $('#note').val();
+			    var title = $('#title').val();
+			    
 			    $('#note').val("");
-			    myDataRef.push({note: note, done: true});
-		    };
-
-		    function notDone(){
-			    var note = $('#note').val();
-			    $('#note').val("");
-			    myDataRef.push({note: note, done: false});
+			    $('#title').val("");
+				if(done) myDataRef.push({title: title, note: note, done: true});
+				else myDataRef.push({title: title, note: note, done: false});
 		    };
 	 	</script>
 
