@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+	<head>
+		<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js'></script>
+		<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/2.0.0-beta.11/angular2.min.js'></script>
+		<script src='fireBaseFunctions.js'></script>
+		<link rel='stylesheet' type='text/css' href='/resources/tutorial/css/example.css'>
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css'>
+
+		<title>Note PAd Alpha</title>
+	</head>
+
+	<body>
+
+
+<!--header -->
+	<nav class="grey darken-4">
+		<div class="navbar-wrapper container">
+			<a href="#" class="brand-logo">Note Pad Alpha</a>
+		</div>
+	</nav>
+
+		
+<!--input row -->
+	<div class="row" >
+	    <form class="col s10 offset-s1" class="container center">
+	      	<div class="row">
+		        <div class="input-field col s3">
+		          <input id="title" type="text" class="validate" placeholder="Title">
+		        </div>
+		        <div class="input-field col s3">
+		          <input id="note" type="text" class="validate" placeholder="Note">
+		        </div>
+
+		       	<div class="input-field col s2">
+		          <a class="waves-effect waves-light btn" onClick= 'add(true)' id="doneButton"><i class="material-icons left">thumb_up</i>Yah</a>
+		        </div>
+		        <div class="input-field col s2">
+		        	<a class="waves-effect waves-light btn" onClick= 'add(false)'><i class="material-icons left">thumb_down</i>Meh</a>
+		        </div>
+	      	</div>
+	    </form>
+	</div>
+
+<!--result section -->
+    <div class="row">
+      <div class="col s5 offset-s1" id="doneDiv">
+      	Done:
+      </div>
+
+      <div class="col s5" id="notDoneDiv">
+      	Not Done: 
+      </div>
+    </div>
+
+	</body>
+</html>
+
+
+     
